@@ -74,10 +74,10 @@ public class test0 extends JFrame {
         timeLabel = new JLabel("入职年份:");
 
         numberText = new JTextField(15);
-        nameText  = new JTextField(15);
+        nameText = new JTextField(15);
         genderText = new JTextField(15);
         deptText = new JTextField(15);
-        timeText  = new JTextField(15);
+        timeText = new JTextField(15);
         inputPanel = new JPanel();
     }
 
@@ -129,7 +129,7 @@ public class test0 extends JFrame {
         buttonPanel.add(switchButton);
     }
 
-    private void addInput(){
+    private void addInput() {
         inputPanel.add(numberLabel);
         inputPanel.add(numberText);
 
@@ -162,13 +162,13 @@ public class test0 extends JFrame {
         switchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (flag){
-                   remove(scrollPane);
-                   add(inputPanel,BorderLayout.CENTER);
+                if (flag) {
+                    remove(scrollPane);
+                    add(inputPanel, BorderLayout.CENTER);
                     revalidate();
                     repaint();
                     flag = false;
-                }else {
+                } else {
                     remove(inputPanel);
                     add(scrollPane);
                     revalidate();
@@ -181,15 +181,15 @@ public class test0 extends JFrame {
         // 例如删除、更新和查询功能的实现
         // 这里省略了具体的事件处理代码，需要根据实际需求来编写
     }
-
-    public static void main(String[] args) {
-        // 创建窗口实例并显示
-        test0 crudInterface = new test0();
-        crudInterface.setTitle("管理员增删改查界面");
-        crudInterface.setSize(1000, 500); // 调整窗口大小以适应组件
-        crudInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        crudInterface.setLocationRelativeTo(null);
-
-        crudInterface.setVisible(true);
-    }
 }
+//    public static void main(String[] args) {
+//        // 创建窗口实例并显示
+//        test0 crudInterface = new test0();
+//        crudInterface.setTitle("管理员增删改查界面");
+//        crudInterface.setSize(1000, 500); // 调整窗口大小以适应组件
+//        crudInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        crudInterface.setLocationRelativeTo(null);
+//
+//        crudInterface.setVisible(true);
+//    }
+//}

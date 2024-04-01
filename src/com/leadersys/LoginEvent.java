@@ -1,5 +1,7 @@
 package com.leadersys;
 
+import GUI.test0;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -81,7 +83,13 @@ public class LoginEvent implements ActionListener {
 	// 登录成功处理器
 	private class LoginSuccessHandler {
 		public void handleSuccess() {
-			new loginResult();
+			test0 crudInterface = new test0();
+			crudInterface.setTitle("管理员增删改查界面");
+			crudInterface.setSize(1000, 500); // 调整窗口大小以适应组件
+			crudInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			crudInterface.setLocationRelativeTo(null);
+
+			crudInterface.setVisible(true);
         }
 	}
 }
