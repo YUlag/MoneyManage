@@ -1,14 +1,5 @@
 package com.yulag;
 
-import Event.User;
-import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import utils.JDBCUtils;
-
-import java.util.List;
-
 /*
  *类名:Leader.class
  *版本:1.0

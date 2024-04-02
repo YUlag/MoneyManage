@@ -92,7 +92,6 @@ public class Login extends JFrame {
 
 	// 设置数据库连接和事件监听器
 	private void setupDatabaseConnection() {
-		JDBCUtils mysql = new JDBCUtils(); // 创建数据库管理对象
 		LoginEventListener loginListener = new LoginEventListener(); // 创建登录事件监听器
 		loginButton.addActionListener(loginListener); // 为登录按钮添加事件监听器
 		// 注册功能未实现，所以以下代码被注释掉

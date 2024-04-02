@@ -165,6 +165,18 @@ public class ManageGUI extends JFrame {
         inputPanel.add(timeLabel);
         inputPanel.add(timeText);
     }
+    public static String getNumberText(){
+        return numberText.getText();
+    }
+    public static String getNameText(){
+        return nameText.getText();
+    }public static String getGenderText(){
+        return genderText.getText();
+    }public static String getDeptText(){
+        return deptText.getText();
+    }public static String getTimeText(){
+        return timeText.getText();
+    }
 
     private void addEvents() {
         // 为按钮添加事件监听器
@@ -178,7 +190,6 @@ public class ManageGUI extends JFrame {
                 tableModel.addRow(new Object[]{name, gender, department});
             }
         });
-
         switchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -1,4 +1,4 @@
-package Event;
+package atom;
 
 public class User {
     private String username;

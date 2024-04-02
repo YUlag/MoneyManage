@@ -1,21 +1,17 @@
 package Event;
 
 import GUI.ManageGUI;
-import SQL.Jundge;
 import com.yulag.Leader;
 import com.yulag.Login;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static SQL.Jundge.LoginJundge;
 
 public class LoginEvent implements ActionListener {
-	private static final String USER_TABLE_QUERY = "SELECT Username,Password FROM user"; // 查询用户表的SQL语句
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String username = Login.getUsernameText();
