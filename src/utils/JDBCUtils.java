@@ -15,7 +15,7 @@ public class JDBCUtils {
     static {
         try {
             Properties properties=new Properties();
-            properties.load(JDBCUtils.class.getClassLoader().getResourceAsStream("utils\\databsae.properties"));
+            properties.load(JDBCUtils.class.getClassLoader().getResourceAsStream("utils\\database.properties"));
             dataSource = DruidDataSourceFactory.createDataSource(properties);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -26,6 +26,10 @@ public class JDBCUtils {
 
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
+    }
+
+    public static DataSource getDataSource(){
+        return dataSource;
     }
 
     public static void close(Statement statement,Connection connection){

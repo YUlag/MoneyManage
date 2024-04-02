@@ -1,15 +1,14 @@
 package GUI;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class test0 extends JFrame {
-    private static final int ROW_COUNT = 5; // ±í¸ñĞĞÊı
-    private static final int COL_COUNT = 3; // ±í¸ñÁĞÊı
+public class ManageGUI extends JFrame {
+    private static final int ROW_COUNT = 5; // è¡¨æ ¼è¡Œæ•°
+    private static final int COL_COUNT = 3; // è¡¨æ ¼åˆ—æ•°
 
     private DefaultTableModel tableModel;
     private JTable table;
@@ -21,29 +20,29 @@ public class test0 extends JFrame {
     private JButton updateButton;
     private JButton selectButton;
     private JButton switchButton;
-    private JPanel buttonPanel; // ÓÃÓÚ·ÅÖÃ°´Å¥µÄÃæ°å
-    private static JPanel inputPanel; // ÓÃÓÚ·ÅÖÃÎÄ±¾µÄÃæ°å
-    private JPanel gapPanel; // ÓÃÓÚ´´½¨¼ä¸ôµÄÃæ°å
+    private JPanel buttonPanel; // ç”¨äºæ”¾ç½®æŒ‰é’®çš„é¢æ¿
+    private static JPanel inputPanel; // ç”¨äºæ”¾ç½®æ–‡æœ¬çš„é¢æ¿
+    private JPanel gapPanel; // ç”¨äºåˆ›å»ºé—´éš”çš„é¢æ¿
     private static JScrollPane scrollPane;
-    private JLabel usernameLabel; // ÕËºÅ±êÇ©
-    private JLabel passwordLabel; // ÃÜÂë±êÇ©
-    private JLabel numberLabel; // ¹¤ºÅ±êÇ©
-    private JLabel nameLabel; // ĞÕÃû±êÇ©
-    private JLabel genderLabel; // ĞÔ±ğ±êÇ©
-    private JLabel deptLabel; // ²¿ÃÅ±êÇ©
-    private JLabel timeLabel; // ÈëÖ°Äê·İ±êÇ©
-    private static JTextField usernameText; // ÕËºÅ¿ò
-    private static JTextField passwordText; // ÃÜÂë¿ò
+    private JLabel usernameLabel; // è´¦å·æ ‡ç­¾
+    private JLabel passwordLabel; // å¯†ç æ ‡ç­¾
+    private JLabel numberLabel; // å·¥å·æ ‡ç­¾
+    private JLabel nameLabel; // å§“åæ ‡ç­¾
+    private JLabel genderLabel; // æ€§åˆ«æ ‡ç­¾
+    private JLabel deptLabel; // éƒ¨é—¨æ ‡ç­¾
+    private JLabel timeLabel; // å…¥èŒå¹´ä»½æ ‡ç­¾
+    private static JTextField usernameText; // è´¦å·æ¡†
+    private static JTextField passwordText; // å¯†ç æ¡†
 
-    private static JTextField numberText; // ¹¤ºÅ¿ò
-    private static JTextField nameText; // ĞÕÃû¿ò
-    private static JTextField genderText; // ĞÔ±ğ¿ò
-    private static JTextField deptText; // ²¿ÃÅ¿ò
-    private static JTextField timeText; // ÈëÖ°Äê·İ
+    private static JTextField numberText; // å·¥å·æ¡†
+    private static JTextField nameText; // å§“åæ¡†
+    private static JTextField genderText; // æ€§åˆ«æ¡†
+    private static JTextField deptText; // éƒ¨é—¨æ¡†
+    private static JTextField timeText; // å…¥èŒå¹´ä»½
 
     private boolean flag = true;
 
-    public test0() {
+    public ManageGUI() {
         createComponents();
         setLayout();
         addComponents();
@@ -52,32 +51,32 @@ public class test0 extends JFrame {
     }
 
     private void createComponents() {
-        // ´´½¨±í¸ñÄ£ĞÍ²¢³õÊ¼»¯Êı¾İ
-        Object[] columnNames = {"±àºÅ", "ĞÔ±ğ", "²¿ÃÅ"};
+        // åˆ›å»ºè¡¨æ ¼æ¨¡å‹å¹¶åˆå§‹åŒ–æ•°æ®
+        Object[] columnNames = {"ç¼–å·", "æ€§åˆ«", "éƒ¨é—¨"};
         tableModel = new DefaultTableModel(columnNames, ROW_COUNT);
         table = new JTable(tableModel);
 
-        // ´´½¨ÎÄ±¾¿ò
+        // åˆ›å»ºæ–‡æœ¬æ¡†
         textFieldName = new JTextField(10);
         textFieldGender = new JTextField(5);
         textFieldDepartment = new JTextField(15);
 
-        // ´´½¨°´Å¥
-        addButton = new JButton("Ìí¼Ó");
-        deleteButton = new JButton("É¾³ı");
-        updateButton = new JButton("¸üĞÂ");
-        selectButton = new JButton("²éÑ¯");
-        switchButton = new JButton("ÇĞ»»");
-        buttonPanel = new JPanel(); // ´´½¨Ò»¸öÃæ°åÓÃÓÚ·ÅÖÃ°´Å¥
+        // åˆ›å»ºæŒ‰é’®
+        addButton = new JButton("æ·»åŠ ");
+        deleteButton = new JButton("åˆ é™¤");
+        updateButton = new JButton("æ›´æ–°");
+        selectButton = new JButton("æŸ¥è¯¢");
+        switchButton = new JButton("åˆ‡æ¢");
+        buttonPanel = new JPanel(); // åˆ›å»ºä¸€ä¸ªé¢æ¿ç”¨äºæ”¾ç½®æŒ‰é’®
 
-        // ÔöÉ¾¸ÄÎÄ±¾¿ò
-        usernameLabel = new JLabel(("ÕËºÅ:"));
-        passwordLabel = new JLabel("ÃÜÂë:");
-        numberLabel = new JLabel("¹¤ºÅ:");
-        nameLabel = new JLabel("ĞÕÃû:");
-        genderLabel = new JLabel("ĞÔ±ğ:");
-        deptLabel = new JLabel("²¿ÃÅ:");
-        timeLabel = new JLabel("ÈëÖ°Äê·İ:");
+        // å¢åˆ æ”¹æ–‡æœ¬æ¡†
+        usernameLabel = new JLabel(("è´¦å·:"));
+        passwordLabel = new JLabel("å¯†ç :");
+        numberLabel = new JLabel("å·¥å·:");
+        nameLabel = new JLabel("å§“å:");
+        genderLabel = new JLabel("æ€§åˆ«:");
+        deptLabel = new JLabel("éƒ¨é—¨:");
+        timeLabel = new JLabel("å…¥èŒå¹´ä»½:");
 
         usernameText = new JTextField(15);
         passwordText = new JTextField(15);
@@ -90,57 +89,57 @@ public class test0 extends JFrame {
     }
 
     private void setLayout() {
-        // Ê¹ÓÃ BorderLayout
+        // ä½¿ç”¨ BorderLayout
         setLayout(new BorderLayout());
 
-        // Ìí¼Ó¼ä¸ôÃæ°åµ½¶¥²¿£¬´´½¨Í·²¿¼ä¸ô
+        // æ·»åŠ é—´éš”é¢æ¿åˆ°é¡¶éƒ¨ï¼Œåˆ›å»ºå¤´éƒ¨é—´éš”
         gapPanel = new JPanel();
         gapPanel.setPreferredSize(new Dimension(0, 30));
         add(gapPanel, BorderLayout.NORTH);
 
-        // Ê¹ÓÃ BorderLayout À´·ÅÖÃ±í¸ñºÍ°´Å¥Ãæ°å
+        // ä½¿ç”¨ BorderLayout æ¥æ”¾ç½®è¡¨æ ¼å’ŒæŒ‰é’®é¢æ¿
         scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(500, 300));
         add(scrollPane);
 
-        // ÉèÖÃ°´Å¥Ãæ°åµÄ²¼¾ÖÎª BoxLayout
+        // è®¾ç½®æŒ‰é’®é¢æ¿çš„å¸ƒå±€ä¸º BoxLayout
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20)); // ÉèÖÃ¼ä¾à
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20)); // è®¾ç½®é—´è·
         add(buttonPanel, BorderLayout.WEST);
 
 
         inputPanel.setLayout(null);
-        usernameLabel.setBounds(50,10,100,25);
-        passwordLabel.setBounds(50,70,100,25);
+        usernameLabel.setBounds(50, 10, 100, 25);
+        passwordLabel.setBounds(50, 70, 100, 25);
         numberLabel.setBounds(350, 10, 100, 25);
         nameLabel.setBounds(350, 70, 100, 25);
         genderLabel.setBounds(350, 130, 100, 25);
         deptLabel.setBounds(350, 190, 100, 25);
         timeLabel.setBounds(350, 250, 100, 25);
 
-        usernameText.setBounds(125,10,200,25);
-        usernameText.addFocusListener(new JTextFieldHintListener(usernameText, "ÕËºÅÄ¬ÈÏÓë¹¤ºÅÏàÍ¬"));
-        passwordText.setBounds(125,70,200,25);
-        passwordText.addFocusListener(new JTextFieldHintListener(passwordText, "ÃÜÂëÄ¬ÈÏ123456"));
+        usernameText.setBounds(125, 10, 200, 25);
+        usernameText.addFocusListener(new JTextFieldHintListener(usernameText, "è´¦å·é»˜è®¤ä¸å·¥å·ç›¸åŒ"));
+        passwordText.setBounds(125, 70, 200, 25);
+        passwordText.addFocusListener(new JTextFieldHintListener(passwordText, "å¯†ç é»˜è®¤123456"));
         numberText.setBounds(425, 10, 200, 25);
-        numberText.addFocusListener(new JTextFieldHintListener(numberText, "²»ÊäÈë°´×îºóÒ»Î»¹¤ºÅµİÔö"));
+        numberText.addFocusListener(new JTextFieldHintListener(numberText, "ä¸è¾“å…¥æŒ‰æœ€åä¸€ä½å·¥å·é€’å¢"));
         nameText.setBounds(425, 70, 200, 25);
         genderText.setBounds(425, 130, 200, 25);
         deptText.setBounds(425, 190, 200, 25);
         timeText.setBounds(425, 250, 200, 25);
-        timeText.addFocusListener(new JTextFieldHintListener(timeText, "²»ÊäÈëÄ¬ÈÏµ±Ç°Äê·İ"));
+        timeText.addFocusListener(new JTextFieldHintListener(timeText, "ä¸è¾“å…¥é»˜è®¤å½“å‰å¹´ä»½"));
     }
 
     private void addComponents() {
-        // Ìí¼Ó°´Å¥µ½°´Å¥Ãæ°å
+        // æ·»åŠ æŒ‰é’®åˆ°æŒ‰é’®é¢æ¿
         buttonPanel.add(addButton);
-        buttonPanel.add(Box.createVerticalStrut(30)); // Ìí¼Ó°´Å¥¼ä¸ô
+        buttonPanel.add(Box.createVerticalStrut(30)); // æ·»åŠ æŒ‰é’®é—´éš”
         buttonPanel.add(deleteButton);
-        buttonPanel.add(Box.createVerticalStrut(30)); // Ìí¼Ó°´Å¥¼ä¸ô
+        buttonPanel.add(Box.createVerticalStrut(30)); // æ·»åŠ æŒ‰é’®é—´éš”
         buttonPanel.add(updateButton);
-        buttonPanel.add(Box.createVerticalStrut(30)); // Ìí¼Ó°´Å¥¼ä¸ô
+        buttonPanel.add(Box.createVerticalStrut(30)); // æ·»åŠ æŒ‰é’®é—´éš”
         buttonPanel.add(selectButton);
-        buttonPanel.add(Box.createVerticalStrut(30)); // Ìí¼Ó°´Å¥¼ä¸ô
+        buttonPanel.add(Box.createVerticalStrut(30)); // æ·»åŠ æŒ‰é’®é—´éš”
         buttonPanel.add(switchButton);
     }
 
@@ -168,11 +167,11 @@ public class test0 extends JFrame {
     }
 
     private void addEvents() {
-        // Îª°´Å¥Ìí¼ÓÊÂ¼ş¼àÌıÆ÷
+        // ä¸ºæŒ‰é’®æ·»åŠ äº‹ä»¶ç›‘å¬å™¨
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ìí¼ÓÊı¾İµ½±í¸ñ
+                // æ·»åŠ æ•°æ®åˆ°è¡¨æ ¼
                 String name = textFieldName.getText();
                 String gender = textFieldGender.getText();
                 String department = textFieldDepartment.getText();
@@ -198,18 +197,19 @@ public class test0 extends JFrame {
                 }
             }
         });
-        // ÆäËû°´Å¥µÄÊÂ¼ş¼àÌıÆ÷¿ÉÒÔ°´ÕÕÀàËÆµÄ·½Ê½Ìí¼Ó
-        // ÀıÈçÉ¾³ı¡¢¸üĞÂºÍ²éÑ¯¹¦ÄÜµÄÊµÏÖ
-        // ÕâÀïÊ¡ÂÔÁË¾ßÌåµÄÊÂ¼ş´¦Àí´úÂë£¬ĞèÒª¸ù¾İÊµ¼ÊĞèÇóÀ´±àĞ´
+        // å…¶ä»–æŒ‰é’®çš„äº‹ä»¶ç›‘å¬å™¨å¯ä»¥æŒ‰ç…§ç±»ä¼¼çš„æ–¹å¼æ·»åŠ 
+        // ä¾‹å¦‚åˆ é™¤ã€æ›´æ–°å’ŒæŸ¥è¯¢åŠŸèƒ½çš„å®ç°
+        // è¿™é‡Œçœç•¥äº†å…·ä½“çš„äº‹ä»¶å¤„ç†ä»£ç ï¼Œéœ€è¦æ ¹æ®å®é™…éœ€æ±‚æ¥ç¼–å†™
     }
-    public static void main(String[] args) {
-        // ´´½¨´°¿ÚÊµÀı²¢ÏÔÊ¾
-        test0 crudInterface = new test0();
-        crudInterface.setTitle("¹ÜÀíÔ±ÔöÉ¾¸Ä²é½çÃæ");
-        crudInterface.setSize(1000, 500); // µ÷Õû´°¿Ú´óĞ¡ÒÔÊÊÓ¦×é¼ş
-        crudInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        crudInterface.setLocationRelativeTo(null);
-
-        crudInterface.setVisible(true);
-    }
+    //æµ‹è¯•ç”¨ä¾‹
+//    public static void main(String[] args) {
+//        // åˆ›å»ºçª—å£å®ä¾‹å¹¶æ˜¾ç¤º
+//        test0 crudInterface = new test0();
+//        crudInterface.setTitle("ç®¡ç†å‘˜å¢åˆ æ”¹æŸ¥ç•Œé¢");
+//        crudInterface.setSize(1000, 500); // è°ƒæ•´çª—å£å¤§å°ä»¥é€‚åº”ç»„ä»¶
+//        crudInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        crudInterface.setLocationRelativeTo(null);
+//
+//        crudInterface.setVisible(true);
+//    }
 }

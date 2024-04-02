@@ -1,31 +1,31 @@
-package com.leadersys;
+package Event;
 /*
- *ÀàÃû:ManageDatabaseReading.class
- *°æ±¾:1.0
- *ÈÕÆÚ:2020Äê12ÔÂ29ÈÕ
+ *ç±»å:ManageDatabaseReading.class
+ *ç‰ˆæœ¬:1.0
+ *æ—¥æœŸ:2020å¹´12æœˆ29æ—¥
  */
 import java.sql.*;
 
 public class ManageDatabaseReading {
 	static Connection con=null;
-	static Statement sql;
+	public static PreparedStatement sql;
 	ResultSet rs;
 
 	 ManageDatabaseReading(){
-		//¼ÓÔØÇı¶¯  
+		//åŠ è½½é©±åŠ¨  
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		//Á¬½ÓÊı¾İ¿â
+		//è¿æ¥æ•°æ®åº“
 		String uri="jdbc:mysql://localhost:3306/bigsystem";
 		try{
-			con=DriverManager.getConnection(uri,"root","123456");//ÕËºÅÃÜÂë
+			con=DriverManager.getConnection(uri,"root","123456");//è´¦å·å¯†ç 
 			sql=con.createStatement();
-			System.out.println("Á´½ÓÊı¾İ¿â³É¹¦");
+			System.out.println("é“¾æ¥æ•°æ®åº“æˆåŠŸ");
 		}catch(SQLException e){
-			System.out.println("Á´½ÓÊı¾İ¿âÊ§°Ü");
+			System.out.println("é“¾æ¥æ•°æ®åº“å¤±è´¥");
 			String temp=e.getMessage();
 			System.out.println(temp);
 		}
