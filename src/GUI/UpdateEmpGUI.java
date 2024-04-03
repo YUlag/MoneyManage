@@ -1,26 +1,13 @@
 package GUI;
 
-import Event.UpdateEmpEvent;
-import SQL.Select;
 import atom.Emp;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.List;
 
-public class ManageGUI extends JFrame {
-    private static int colCount; // 表格列数
-    private static String[] columnNames; // 表格头部
-
-    private DefaultTableModel tableModel;
-    private JTable table;
-//    private JTextField textFieldName;
-//    private JTextField textFieldGender;
-//    private JTextField textFieldDepartment;
+public class UpdateEmpGUI {
     private JButton addButton;
     private JButton deleteButton;
     private JButton updateButton;
@@ -46,41 +33,7 @@ public class ManageGUI extends JFrame {
     private static JTextField deptText; // 部门框
     private static JTextField timeText; // 入职年份
 
-    private boolean flag = true;
-
-    public ManageGUI() {
-        createComponents();
-        setLayout();
-
-        addComponents();
-        addInput();
-        addEvents();
-    }
-
     private void createComponents() {
-        List<Emp> allEmp = getAllEmp();
-        // 创建表格模型并初始化数据
-        tableModel = new DefaultTableModel(columnNames, 0);
-        table = new JTable(tableModel);
-
-        for (Emp emp : allEmp) {
-            Object[] rowData = new Object[] {
-                    emp.getEmployeeID(),
-                    emp.getName(),
-                    emp.getGender(),
-                    emp.getPosition(),
-                    emp.getHireYear(),
-                    emp.getFinancialAuthority()
-            };
-            // 将一行数据添加到表格模型中
-            tableModel.addRow(rowData);
-        }
-
-        // 创建文本框
-//        textFieldName = new JTextField(10);
-//        textFieldGender = new JTextField(5);
-//        textFieldDepartment = new JTextField(15);
-
         // 创建按钮
         addButton = new JButton("添加");
         deleteButton = new JButton("删除");
@@ -206,70 +159,4 @@ public class ManageGUI extends JFrame {
         return timeText.getText();
     }
 
-
-    private void addEvents() {
-        // 为按钮添加事件监听器
-//        switchButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (flag) {
-//                    remove(scrollPane);
-//                    add(inputPanel, BorderLayout.CENTER);
-//                    revalidate();
-//                    repaint();
-//                    flag = false;
-//                } else {
-//                    remove(inputPanel);
-//                    add(scrollPane);
-//                    revalidate();
-//                    repaint();
-//                    flag = true;
-//                }
-//            }
-//        });
-        // 更新监听
-        UpdateEventListener updateEventListener  = new UpdateEventListener();
-        updateButton.addActionListener(updateEventListener);
-    }
-
-    public List<Emp> getAllEmp() {
-        List<Emp> emps = Select.selectAllEmp();
-        int i = 0;
-        // 获取Emp类的成员数量
-        Class<?> clazz = null;
-        try {
-            clazz = Class.forName("atom.Emp");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Field[] fields = clazz.getDeclaredFields();
-
-        // 实时设置表格大小
-        colCount = fields.length;
-        columnNames = new String[colCount];
-
-        for (Field field : fields) {
-            columnNames[i++] = field.getName();
-        }
-        return emps;
-    }
-
-    //测试用例
-//    public static void main(String[] args) {
-//        // 创建窗口实例并显示
-//        test0 crudInterface = new test0();
-//        crudInterface.setTitle("管理员增删改查界面");
-//        crudInterface.setSize(1000, 500); // 调整窗口大小以适应组件
-//        crudInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        crudInterface.setLocationRelativeTo(null);
-//
-//        crudInterface.setVisible(true);
-//    }
-}
-
-class UpdateEventListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new UpdateEmpEvent().actionPerformed(e);
-    }
 }

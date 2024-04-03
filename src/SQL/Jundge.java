@@ -12,7 +12,7 @@ public class Jundge {
     static JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
     static RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
 
-    public static String LoginJundge(String username, String password) throws Exception {
+    public static String loginJundge(String username, String password) throws Exception {
 
 
         String query = "SELECT * FROM user WHERE Username = ? AND Password = ? LIMIT 1";

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import static SQL.Jundge.LoginJundge;
+import static SQL.Jundge.loginJundge;
 
 public class LoginEvent implements ActionListener {
 	@Override
@@ -25,7 +25,7 @@ public class LoginEvent implements ActionListener {
 			}
 
 			// 检查是否找到匹配的用户记录
-			String role = LoginJundge(username, password);
+			String role = loginJundge(username, password);
 
 			if (!role.equals("Error")) {
 //				System.out.println(role);
@@ -83,7 +83,7 @@ public class LoginEvent implements ActionListener {
 	}
 
 	// 登录成功处理器
-	private class LoginSuccessHandler {
+	public static class LoginSuccessHandler {
 		public void handleSuccess() {
 			ManageGUI crudInterface = new ManageGUI();
 			crudInterface.setTitle("管理员增删改查界面");

@@ -1,6 +1,7 @@
 package Event;
 
 import GUI.ManageGUI;
+import SQL.Update;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,7 @@ public class UpdateEmpEvent implements ActionListener {
         if(number.equals("")){
             NumberEmpty();
         }else{
-
+            Update.updateEmp(number,name,gender,dept,time);
         }
     }
 

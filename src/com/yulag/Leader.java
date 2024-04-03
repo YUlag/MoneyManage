@@ -1,5 +1,7 @@
 package com.yulag;
 
+import Event.LoginEvent;
+
 /*
  *类名:Leader.class
  *版本:1.0
@@ -15,7 +17,8 @@ public class Leader {
 	}
 
 	public static void main(String[] args) {
-		Login login =new Login();//加载登录类
-		setDisappear(login);
+//		Login login =new Login();//加载登录类
+//		setDisappear(login);
+		new LoginEvent.LoginSuccessHandler().handleSuccess();
 	}
 }

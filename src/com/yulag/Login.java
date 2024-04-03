@@ -1,7 +1,6 @@
 package com.yulag;
 
 import Event.LoginEvent;
-import utils.JDBCUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +20,7 @@ public class Login extends JFrame {
 
 	public Login() {
 		initializeUI();
-		setupDatabaseConnection();
+		addLoginListener();
 		setupWindowProperties();
 		add(contentPanel);
 	}
@@ -90,15 +89,6 @@ public class Login extends JFrame {
 		setVisible(true); // 显示窗口
 	}
 
-	// 设置数据库连接和事件监听器
-	private void setupDatabaseConnection() {
-		LoginEventListener loginListener = new LoginEventListener(); // 创建登录事件监听器
-		loginButton.addActionListener(loginListener); // 为登录按钮添加事件监听器
-		// 注册功能未实现，所以以下代码被注释掉
-		// RegistrationEventListener registrationListener = new RegistrationEventListener();
-		// reg.addMouseListener(registrationListener);
-	}
-
 	// 获取用户名输入框的文本
 	public static String getUsernameText() {
 		return usernameInput.getText();
@@ -107,6 +97,12 @@ public class Login extends JFrame {
 	// 获取密码输入框的文本
 	public static String getPasswordText() {
 		return new String(passwordInput.getPassword());
+	}
+
+	// 事件监听器
+	private void addLoginListener() {
+		LoginEventListener loginListener = new LoginEventListener(); // 创建登录事件监听器
+		loginButton.addActionListener(loginListener); // 为登录按钮添加事件监听器
 	}
 }
 
