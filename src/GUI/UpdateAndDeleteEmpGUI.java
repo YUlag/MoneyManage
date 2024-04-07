@@ -186,7 +186,7 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
     }
 
     private void addEvents() {
-        selectButton.addActionListener(new SelectEventListener());
+        selectButton.addActionListener(new SelectEmpByIDEventListener());
 
         updateButton.addActionListener(new UpdateEventListener());
 
@@ -304,7 +304,7 @@ class UpdateEventListener implements ActionListener {
     }
 }
 
-class SelectEventListener implements ActionListener {
+class SelectEmpByIDEventListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         new SelectEmpByIdEvent().actionPerformed(e);

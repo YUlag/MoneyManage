@@ -2,6 +2,7 @@ package GUI;
 
 import SQL.Select;
 import atom.Emp;
+import Event.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,11 +10,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManageGUI extends JFrame {
-    private static int colCount; // 表格列数
-    private static String[] columnNames; // 表格头部
+    private static final int colCount = 10; // 表格列数
+    private static final String[] columnNames = new String[]{"工号", "账号", "密码", "姓名", "性别", "年龄", "岗位", "部门", "入职时间", "财务权限"}; // 表格头部
 
     private DefaultTableModel tableModel;
     private JTable table;
@@ -33,9 +35,12 @@ public class ManageGUI extends JFrame {
 
     private static JTextField numberText; // 工号框
     private static JTextField nameText; // 姓名框
-    private static JTextField genderText; // 性别框
-    private static JTextField deptText; // 部门框
-    private static JTextField positionText; // 岗位框
+    private static JComboBox<String> genderBox; // 性别多选框
+    private static JComboBox<String> positionBox; // 岗位多选框
+    private static JComboBox<String> departmentBox; // 部门多选框
+    private static String[] positions; // 所有岗位
+    private static String[] departments; // 所有部门
+    private static String[] genders = {"","男","女"};
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -49,28 +54,11 @@ public class ManageGUI extends JFrame {
     }
 
     private void createComponents() {
-        List<Emp> allEmp = getAllEmp();
         // 创建表格模型并初始化数据
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
-
-        for (Emp emp : allEmp) {
-            Object[] rowData = new Object[]{
-                    emp.getEmpID(),
-                    emp.getUsername(),
-                    emp.getPassword(),
-                    emp.getName(),
-                    emp.getGender(),
-                    emp.getAge(),
-                    emp.getPosition(),
-                    emp.getDepartment(),
-                    simpleDateFormat.format(emp.getHireYear()),
-                    emp.getFinancialAuthority()
-            };
-            // 将一行数据添加到表格模型中
-            tableModel.addRow(rowData);
-        }
-
+        List<Emp> emps = Select.selectAllEmp();
+        getEmpInEmps(emps);
         // 创建按钮
         addButton = new JButton("添加");
         updateAndDeleteButton = new JButton("更新&删除");
@@ -87,9 +75,18 @@ public class ManageGUI extends JFrame {
 
         numberText = new JTextField(15);
         nameText = new JTextField(15);
-        genderText = new JTextField(15);
-        deptText = new JTextField(15);
-        positionText = new JTextField(15);
+        genderBox = new JComboBox<>(genders);
+
+        ArrayList<String> list1 = new ArrayList<>(List.of(Select.getAllPositionName()));
+        list1.add(0,"");
+        positions = list1.toArray(new String[0]);
+
+        ArrayList<String> list2 = new ArrayList<>(List.of(Select.getAllDepartmentName()));
+        list2.add(0,"");
+        departments = list2.toArray(new String[0]);
+
+        departmentBox = new JComboBox<>(departments);
+        positionBox = new JComboBox<>(positions);
     }
 
     private void setLayout() {
@@ -126,9 +123,9 @@ public class ManageGUI extends JFrame {
 //        numberText.addFocusListener(new JTextFieldHintListener(numberText, "不输入按最后一位工号递增"));
         numberText.setBounds(200, 10, 200, 25);
         nameText.setBounds(490, 10, 200, 25);
-        genderText.setBounds(780, 10, 200, 25);
-        deptText.setBounds(200, 50, 200, 25);
-        positionText.setBounds(490, 50, 200, 25);
+        genderBox.setBounds(780, 10, 200, 25);
+        departmentBox.setBounds(200, 50, 200, 25);
+        positionBox.setBounds(490, 50, 200, 25);
     }
 
     private void addComponents() {
@@ -150,36 +147,14 @@ public class ManageGUI extends JFrame {
         inputPanel.add(nameText);
 
         inputPanel.add(genderLabel);
-        inputPanel.add(genderText);
+        inputPanel.add(genderBox);
 
         inputPanel.add(deptLabel);
-        inputPanel.add(deptText);
+        inputPanel.add(departmentBox);
 
         inputPanel.add(positionLabel);
-        inputPanel.add(positionText);
+        inputPanel.add(positionBox);
     }
-
-    public static String getNumberText() {
-        return numberText.getText();
-    }
-
-    public static String getNameText() {
-        return nameText.getText();
-    }
-
-    public static String getGenderText() {
-        return genderText.getText();
-    }
-
-    public static String getDeptText() {
-        return deptText.getText();
-    }
-
-//    public static String getTimeText() {
-//        return timeText.getText();
-//    }
-
-
     private void addEvents() {
         // 为按钮添加事件监听器
         updateAndDeleteButton.addActionListener(new ActionListener() {
@@ -198,39 +173,48 @@ public class ManageGUI extends JFrame {
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Emp> updatedAllEmp = getAllEmp();
-                // 清空表格模型中的所有行
-                clearTable();
-                // 使用更新后的列表重新填充表格模型
-                for (Emp emp : updatedAllEmp) {
-                    Object[] rowData = new Object[]{
-                            emp.getEmpID(),
-                            emp.getUsername(),
-                            emp.getPassword(),
-                            emp.getName(),
-                            emp.getGender(),
-                            emp.getAge(),
-                            emp.getPosition(),
-                            emp.getDepartment(),
-                            simpleDateFormat.format(emp.getHireYear()),
-                            emp.getFinancialAuthority()
-                    };
-                    tableModel.addRow(rowData);
-                }
-                // 重绘表格
-                table.repaint();
+                List<Emp> emps = Select.selectAllEmp();
+                getEmpInEmps(emps);
+            }
+        });
+
+        selectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String number = ManageGUI.getNumberText();
+                String name = ManageGUI.getNameText();
+                String gender = ManageGUI.getGenderText();
+                String department = ManageGUI.getDeptText();
+                String position = ManageGUI.getPositionText();
+
+                List<Emp> emps = Select.selectEmp(number, name, gender, department, position);
+
+                getEmpInEmps(emps);
             }
         });
     }
 
 
-    public List<Emp> getAllEmp() {
-        List<Emp> emps = Select.selectAllEmp();
+    public void getEmpInEmps(List<Emp> emps) {
+        clearTable();
 
-        colCount = 10;
-        columnNames = new String[]{"工号", "账号", "密码", "姓名", "性别", "年龄", "岗位", "部门", "入职时间", "财务权限"};
-
-        return emps;
+        for (Emp emp : emps) {
+            Object[] rowData = new Object[]{
+                    emp.getEmpID(),
+                    emp.getUsername(),
+                    emp.getPassword(),
+                    emp.getName(),
+                    emp.getGender(),
+                    emp.getAge(),
+                    emp.getPosition(),
+                    emp.getDepartment(),
+                    simpleDateFormat.format(emp.getHireYear()),
+                    emp.getFinancialAuthority()
+            };
+            // 将一行数据添加到表格模型中
+            tableModel.addRow(rowData);
+        }
+        table.repaint();
     }
 
     public void clearTable(){
@@ -239,4 +223,16 @@ public class ManageGUI extends JFrame {
             tableModel.removeRow(0);
         }
     }
+
+    public static String getNumberText() {
+        return numberText.getText();
+    }
+    public static String getNameText() {
+        return nameText.getText();
+    }
+    public static String getGenderText() { return (String) genderBox.getSelectedItem(); }
+    public static String getDeptText() {
+        return (String) departmentBox.getSelectedItem();
+    }
+    public static String getPositionText() {return (String) positionBox.getSelectedItem();}
 }
