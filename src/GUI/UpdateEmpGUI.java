@@ -17,7 +17,6 @@ public class UpdateEmpGUI extends JFrame {
     private JButton cancelButton;
     private JButton updateButton;
     private static JPanel panel; // 用于放置的面板
-    private static JScrollPane scrollPane;
     private JLabel usernameLabel; // 账号标签
     private JLabel passwordLabel; // 密码标签
     private JLabel numberLabel; // 工号标签
@@ -34,23 +33,19 @@ public class UpdateEmpGUI extends JFrame {
 
     private static JTextField numberText; // 工号框
     private static JTextField nameText; // 姓名框
-//    private static JTextField genderText; // 性别框
-//    private static JTextField positionText; // 岗位框
     private static JTextField timeText; // 入职年份
-//    private static JTextField departmentText; // 部门框
-    private static JTextField financialAuthorityText; // 权限
     private static JTextField birthText; // 生日
-    static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+    static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd"); // 时期格式
     private static JRadioButton gender1 = new JRadioButton("男");
     private static JRadioButton gender2 = new JRadioButton("女");
     private static JRadioButton fin1 = new JRadioButton("是");
     private static JRadioButton fin2 = new JRadioButton("否");
-    private static ButtonGroup genderGroup =new ButtonGroup();
-    private ButtonGroup finGroup =new ButtonGroup();
-    private static JComboBox<String> positionBox;
-    private static JComboBox<String> departmentBox;
-    String[] positions = SQL.Select.getAllPositionName();
-    String[] departments = SQL.Select.getAllDepartmentName();
+    private static ButtonGroup genderGroup =new ButtonGroup(); // 性别选项组
+    private ButtonGroup finGroup =new ButtonGroup(); // 权限组
+    private static JComboBox<String> positionBox; // 岗位多选框
+    private static JComboBox<String> departmentBox; // 部门多选框
+    String[] positions = SQL.Select.getAllPositionName(); // 所有岗位
+    String[] departments = SQL.Select.getAllDepartmentName(); // 所有部门
 
     public UpdateEmpGUI() {
         createComponents();
@@ -83,13 +78,8 @@ public class UpdateEmpGUI extends JFrame {
         numberText = new JTextField(15);
         nameText = new JTextField(15);
 
-//        genderText = new JTextField(15);
         positionBox = new JComboBox<>(positions);
         departmentBox = new JComboBox<>(departments);
-//        positionText = new JTextField(15);
-//        departmentText = new JTextField(15);
-
-//        financialAuthorityText = new JTextField(15);
 
         timeText = new JTextField(15);
         birthText = new JTextField(15);
@@ -172,7 +162,6 @@ public class UpdateEmpGUI extends JFrame {
         panel.add(nameText);
 
         panel.add(genderLabel);
-//        panel.add(genderText);
         genderGroup.add(gender1);
         genderGroup.add(gender2);
         panel.add(gender1);
@@ -185,7 +174,6 @@ public class UpdateEmpGUI extends JFrame {
         panel.add(departmentBox);
 
         panel.add(financialAuthorityLabel);
-//        panel.add(financialAuthorityText);
         finGroup.add(fin1);
         finGroup.add(fin2);
         panel.add(fin1);
