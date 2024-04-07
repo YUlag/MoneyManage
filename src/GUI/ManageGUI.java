@@ -17,9 +17,6 @@ public class ManageGUI extends JFrame {
 
     private DefaultTableModel tableModel;
     private JTable table;
-//    private JTextField textFieldName;
-//    private JTextField textFieldGender;
-//    private JTextField textFieldDepartment;
     private JButton addButton;
     private JButton updateAndDeleteButton;
     private JButton selectButton;
@@ -28,24 +25,19 @@ public class ManageGUI extends JFrame {
     private static JPanel inputPanel; // 用于放置文本的面板
     private JPanel gapPanel; // 用于创建间隔的面板
     private static JScrollPane scrollPane;
-    private JLabel usernameLabel; // 账号标签
-    private JLabel passwordLabel; // 密码标签
     private JLabel numberLabel; // 工号标签
     private JLabel nameLabel; // 姓名标签
     private JLabel genderLabel; // 性别标签
     private JLabel deptLabel; // 部门标签
-    private JLabel timeLabel; // 入职年份标签
-    private static JTextField usernameText; // 账号框
-    private static JTextField passwordText; // 密码框
+    private JLabel positionLabel; // 岗位标签
 
     private static JTextField numberText; // 工号框
     private static JTextField nameText; // 姓名框
     private static JTextField genderText; // 性别框
     private static JTextField deptText; // 部门框
-    private static JTextField timeText; // 入职年份
+    private static JTextField positionText; // 岗位框
 
-    private boolean flag = true;
-    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public ManageGUI() {
         createComponents();
@@ -63,7 +55,7 @@ public class ManageGUI extends JFrame {
         table = new JTable(tableModel);
 
         for (Emp emp : allEmp) {
-            Object[] rowData = new Object[] {
+            Object[] rowData = new Object[]{
                     emp.getEmpID(),
                     emp.getUsername(),
                     emp.getPassword(),
@@ -86,33 +78,28 @@ public class ManageGUI extends JFrame {
         refreshButton = new JButton("刷新");
         buttonPanel = new JPanel(); // 创建一个面板用于放置按钮
 
-        // 增删改文本框
-        usernameLabel = new JLabel(("账号:"));
-        passwordLabel = new JLabel("密码:");
+
         numberLabel = new JLabel("工号:");
         nameLabel = new JLabel("姓名:");
         genderLabel = new JLabel("性别:");
         deptLabel = new JLabel("部门:");
-        timeLabel = new JLabel("入职年份:");
+        positionLabel = new JLabel("岗位:");
 
-        usernameText = new JTextField(15);
-        passwordText = new JTextField(15);
         numberText = new JTextField(15);
         nameText = new JTextField(15);
         genderText = new JTextField(15);
         deptText = new JTextField(15);
-        timeText = new JTextField(15);
-        inputPanel = new JPanel();
+        positionText = new JTextField(15);
     }
 
     private void setLayout() {
         // 使用 BorderLayout
         setLayout(new BorderLayout());
 
-        // 添加间隔面板到顶部，创建头部间隔
-        gapPanel = new JPanel();
-        gapPanel.setPreferredSize(new Dimension(0, 30));
-        add(gapPanel, BorderLayout.NORTH);
+        // 搜索栏
+        inputPanel = new JPanel();
+        inputPanel.setPreferredSize(new Dimension(0, 100));
+        add(inputPanel, BorderLayout.NORTH);
 
         // 使用 BorderLayout 来放置表格和按钮面板
         scrollPane = new JScrollPane(table);
@@ -126,25 +113,22 @@ public class ManageGUI extends JFrame {
 
 
         inputPanel.setLayout(null);
-        usernameLabel.setBounds(50, 10, 100, 25);
-        passwordLabel.setBounds(50, 70, 100, 25);
-        numberLabel.setBounds(350, 10, 100, 25);
-        nameLabel.setBounds(350, 70, 100, 25);
-        genderLabel.setBounds(350, 130, 100, 25);
-        deptLabel.setBounds(350, 190, 100, 25);
-        timeLabel.setBounds(350, 250, 100, 25);
+        numberLabel.setBounds(130, 10, 100, 25);
+        nameLabel.setBounds(420, 10, 100, 25);
+        genderLabel.setBounds(710, 10, 100, 25);
+        deptLabel.setBounds(130, 50, 100, 25);
+        positionLabel.setBounds(420, 50, 100, 25);
 
-        usernameText.setBounds(125, 10, 200, 25);
-        usernameText.addFocusListener(new JTextFieldHintListener(usernameText, "账号默认与工号相同"));
-        passwordText.setBounds(125, 70, 200, 25);
-        passwordText.addFocusListener(new JTextFieldHintListener(passwordText, "密码默认123456"));
-        numberText.setBounds(425, 10, 200, 25);
-        numberText.addFocusListener(new JTextFieldHintListener(numberText, "不输入按最后一位工号递增"));
-        nameText.setBounds(425, 70, 200, 25);
-        genderText.setBounds(425, 130, 200, 25);
-        deptText.setBounds(425, 190, 200, 25);
-        timeText.setBounds(425, 250, 200, 25);
-        timeText.addFocusListener(new JTextFieldHintListener(timeText, "不输入默认当前年份"));
+//        usernameText.setBounds(125, 10, 200, 25);
+//        usernameText.addFocusListener(new JTextFieldHintListener(usernameText, "账号默认与工号相同"));
+//        passwordText.setBounds(125, 70, 200, 25);
+//        passwordText.addFocusListener(new JTextFieldHintListener(passwordText, "密码默认123456"));
+//        numberText.addFocusListener(new JTextFieldHintListener(numberText, "不输入按最后一位工号递增"));
+        numberText.setBounds(200, 10, 200, 25);
+        nameText.setBounds(490, 10, 200, 25);
+        genderText.setBounds(780, 10, 200, 25);
+        deptText.setBounds(200, 50, 200, 25);
+        positionText.setBounds(490, 50, 200, 25);
     }
 
     private void addComponents() {
@@ -159,12 +143,6 @@ public class ManageGUI extends JFrame {
     }
 
     private void addInput() {
-        inputPanel.add(usernameLabel);
-        inputPanel.add(usernameText);
-
-        inputPanel.add(passwordLabel);
-        inputPanel.add(passwordText);
-
         inputPanel.add(numberLabel);
         inputPanel.add(numberText);
 
@@ -177,8 +155,8 @@ public class ManageGUI extends JFrame {
         inputPanel.add(deptLabel);
         inputPanel.add(deptText);
 
-        inputPanel.add(timeLabel);
-        inputPanel.add(timeText);
+        inputPanel.add(positionLabel);
+        inputPanel.add(positionText);
     }
 
     public static String getNumberText() {
@@ -197,9 +175,9 @@ public class ManageGUI extends JFrame {
         return deptText.getText();
     }
 
-    public static String getTimeText() {
-        return timeText.getText();
-    }
+//    public static String getTimeText() {
+//        return timeText.getText();
+//    }
 
 
     private void addEvents() {
@@ -222,12 +200,10 @@ public class ManageGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 List<Emp> updatedAllEmp = getAllEmp();
                 // 清空表格模型中的所有行
-                while (tableModel.getRowCount() > 0) {
-                    tableModel.removeRow(0);
-                }
+                clearTable();
                 // 使用更新后的列表重新填充表格模型
                 for (Emp emp : updatedAllEmp) {
-                    Object[] rowData = new Object[] {
+                    Object[] rowData = new Object[]{
                             emp.getEmpID(),
                             emp.getUsername(),
                             emp.getPassword(),
@@ -252,27 +228,15 @@ public class ManageGUI extends JFrame {
         List<Emp> emps = Select.selectAllEmp();
 
         colCount = 10;
-        columnNames = new String[]{"工号","账号","密码", "姓名", "性别","年龄","岗位","部门", "入职时间","财务权限"};
+        columnNames = new String[]{"工号", "账号", "密码", "姓名", "性别", "年龄", "岗位", "部门", "入职时间", "财务权限"};
 
         return emps;
     }
 
-    //测试用例
-//    public static void main(String[] args) {
-//        // 创建窗口实例并显示
-//        test0 crudInterface = new test0();
-//        crudInterface.setTitle("管理员增删改查界面");
-//        crudInterface.setSize(1000, 500); // 调整窗口大小以适应组件
-//        crudInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        crudInterface.setLocationRelativeTo(null);
-//
-//        crudInterface.setVisible(true);
-//    }
+    public void clearTable(){
+        // 清空表格模型中的所有行
+        while (tableModel.getRowCount() > 0) {
+            tableModel.removeRow(0);
+        }
+    }
 }
-
-//class UpdateEventListener implements ActionListener {
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        new UpdateEmpEvent().actionPerformed(e);
-//    }
-//}
