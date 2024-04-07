@@ -1,28 +1,28 @@
 package SQL;
 
-import atom.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import utils.JDBCUtils;
+import atom.Emp;
 
 import java.util.List;
 
 public class Jundge {
     static JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
-    static RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+    static RowMapper<Emp> rowMapper = new BeanPropertyRowMapper<>(Emp.class);
 
     public static String loginJundge(String username, String password) throws Exception {
 
 
-        String query = "SELECT * FROM user WHERE Username = ? AND Password = ? LIMIT 1";
+        String query = "SELECT * FROM emp WHERE Username = ? AND Password = ? LIMIT 1";
 
 
             // 查询单个对象
-            List<User> users = jdbcTemplate.query(query, rowMapper, username, password);
+            List<Emp> emp = jdbcTemplate.query(query, rowMapper, username, password);
 
-            if (!users.isEmpty()) {
-                return users.get(0).getRole();
+            if (!emp.isEmpty()) {
+                return "OK";
             }
 
         return "Error";

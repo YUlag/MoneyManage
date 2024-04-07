@@ -1,6 +1,5 @@
 package GUI;
 
-import Event.UpdateEmpEvent;
 import SQL.Select;
 import atom.Emp;
 
@@ -10,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ManageGUI extends JFrame {
@@ -47,6 +47,7 @@ public class ManageGUI extends JFrame {
     private static JTextField timeText; // 入职年份
 
     private boolean flag = true;
+    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
 
     public ManageGUI() {
         createComponents();
@@ -65,21 +66,20 @@ public class ManageGUI extends JFrame {
 
         for (Emp emp : allEmp) {
             Object[] rowData = new Object[] {
-                    emp.getEmployeeID(),
+                    emp.getEmpID(),
+                    emp.getUsername(),
+                    emp.getPassword(),
                     emp.getName(),
                     emp.getGender(),
+                    emp.getAge(),
                     emp.getPosition(),
-                    emp.getHireYear(),
+                    emp.getDepartment(),
+                    simpleDateFormat.format(emp.getHireYear()),
                     emp.getFinancialAuthority()
             };
             // 将一行数据添加到表格模型中
             tableModel.addRow(rowData);
         }
-
-        // 创建文本框
-//        textFieldName = new JTextField(10);
-//        textFieldGender = new JTextField(5);
-//        textFieldDepartment = new JTextField(15);
 
         // 创建按钮
         addButton = new JButton("添加");
@@ -209,6 +209,18 @@ public class ManageGUI extends JFrame {
 
     private void addEvents() {
         // 为按钮添加事件监听器
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UpdateEmpGUI updateEmpGUI = new UpdateEmpGUI();
+                updateEmpGUI.setTitle("员工更新界面");
+                updateEmpGUI.setSize(1000, 700); // 调整窗口大小以适应组件
+                updateEmpGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                updateEmpGUI.setLocationRelativeTo(null);
+
+                updateEmpGUI.setVisible(true);
+            }
+        });
 //        switchButton.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -228,29 +240,30 @@ public class ManageGUI extends JFrame {
 //            }
 //        });
         // 更新监听
-        UpdateEventListener updateEventListener  = new UpdateEventListener();
-        updateButton.addActionListener(updateEventListener);
+//        UpdateEventListener updateEventListener  = new UpdateEventListener();
+//        updateButton.addActionListener(updateEventListener);
     }
 
     public List<Emp> getAllEmp() {
         List<Emp> emps = Select.selectAllEmp();
-        int i = 0;
-        // 获取Emp类的成员数量
-        Class<?> clazz = null;
-        try {
-            clazz = Class.forName("atom.Emp");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Field[] fields = clazz.getDeclaredFields();
+//        int i = 0;
+//        // 获取Emp类的成员数量
+//        Class<?> clazz = null;
+//        try {
+//            clazz = Class.forName("atom.Emp");
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//        Field[] fields = clazz.getDeclaredFields();
+//
+//        // 实时设置表格大小
+        colCount = 10;
+        columnNames = new String[]{"工号","账号","密码", "姓名", "性别","年龄","岗位","部门", "入职时间","财务权限"};
+//
+//        for (Field field : fields) {
+//            columnNames[i++] = field.getName();
+//        }
 
-        // 实时设置表格大小
-        colCount = fields.length;
-        columnNames = new String[colCount];
-
-        for (Field field : fields) {
-            columnNames[i++] = field.getName();
-        }
         return emps;
     }
 
@@ -267,9 +280,9 @@ public class ManageGUI extends JFrame {
 //    }
 }
 
-class UpdateEventListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new UpdateEmpEvent().actionPerformed(e);
-    }
-}
+//class UpdateEventListener implements ActionListener {
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        new UpdateEmpEvent().actionPerformed(e);
+//    }
+//}
