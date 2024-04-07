@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import utils.JDBCUtils;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Select {
@@ -63,5 +65,27 @@ public class Select {
         String sql = "select PositionID from positions where PositionName = ?";
         Integer positionID = jdbcTemplate.queryForObject(sql, Integer.class, positionName);
         return positionID;
+    }
+
+    public static String[] getAllDepartmentName(){
+        String sql = "select DepartmentName from departments";
+        List<String> departmentNames = jdbcTemplate.query(sql, new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getString("DepartmentName");
+            }
+        });
+        return departmentNames.toArray(new String[0]);
+    }
+
+    public static String[] getAllPositionName(){
+        String sql = "select PositionName from positions";
+        List<String> positionNames = jdbcTemplate.query(sql, new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getString("PositionName");
+            }
+        });
+        return positionNames.toArray(new String[0]);
     }
 }

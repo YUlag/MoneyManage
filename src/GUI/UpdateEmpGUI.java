@@ -2,12 +2,15 @@ package GUI;
 
 import Event.UpdateEmpEvent;
 import Event.SelectEmpByIdEvent;
+import utils.CalendarPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 
 public class UpdateEmpGUI extends JFrame {
     private JButton selectButton;
@@ -31,12 +34,23 @@ public class UpdateEmpGUI extends JFrame {
 
     private static JTextField numberText; // 工号框
     private static JTextField nameText; // 姓名框
-    private static JTextField genderText; // 性别框
-    private static JTextField positionText; // 岗位框
+//    private static JTextField genderText; // 性别框
+//    private static JTextField positionText; // 岗位框
     private static JTextField timeText; // 入职年份
-    private static JTextField departmentText; // 部门框
+//    private static JTextField departmentText; // 部门框
     private static JTextField financialAuthorityText; // 权限
     private static JTextField birthText; // 生日
+    static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+    private static JRadioButton gender1 = new JRadioButton("男");
+    private static JRadioButton gender2 = new JRadioButton("女");
+    private static JRadioButton fin1 = new JRadioButton("是");
+    private static JRadioButton fin2 = new JRadioButton("否");
+    private static ButtonGroup genderGroup =new ButtonGroup();
+    private ButtonGroup finGroup =new ButtonGroup();
+    private static JComboBox<String> positionBox;
+    private static JComboBox<String> departmentBox;
+    String[] positions = SQL.Select.getAllPositionName();
+    String[] departments = SQL.Select.getAllDepartmentName();
 
     public UpdateEmpGUI() {
         createComponents();
@@ -68,10 +82,15 @@ public class UpdateEmpGUI extends JFrame {
         passwordText = new JTextField(15);
         numberText = new JTextField(15);
         nameText = new JTextField(15);
-        genderText = new JTextField(15);
-        positionText = new JTextField(15);
-        departmentText = new JTextField(15);
-        financialAuthorityText = new JTextField(15);
+
+//        genderText = new JTextField(15);
+        positionBox = new JComboBox<>(positions);
+        departmentBox = new JComboBox<>(departments);
+//        positionText = new JTextField(15);
+//        departmentText = new JTextField(15);
+
+//        financialAuthorityText = new JTextField(15);
+
         timeText = new JTextField(15);
         birthText = new JTextField(15);
         panel = new JPanel();
@@ -84,6 +103,7 @@ public class UpdateEmpGUI extends JFrame {
         panel.setLayout(null);
         numberLabel.setBounds(50, 25, 100, 25);
         numberText.setBounds(125, 25, 200, 25);
+        numberText.addFocusListener(new JTextFieldHintListener(numberText, "工号不可修改，仅做查询"));
 
         usernameLabel.setBounds(50, 90, 100, 25);
         usernameText.setBounds(125, 90, 200, 25);
@@ -92,7 +112,7 @@ public class UpdateEmpGUI extends JFrame {
         nameText.setBounds(125, 150, 200, 25);
 
         departmentLabel.setBounds(50, 210, 100, 25);
-        departmentText.setBounds(125, 210, 200, 25);
+        departmentBox.setBounds(125, 210, 200, 25);
 
         timeLabel.setBounds(50, 270, 100, 25);
         timeText.setBounds(125, 270, 200, 25);
@@ -101,20 +121,33 @@ public class UpdateEmpGUI extends JFrame {
         passwordText.setBounds(425, 90, 200, 25);
 
         genderLabel.setBounds(350, 150, 100, 25);
-        genderText.setBounds(425, 150, 200, 25);
+//        genderText.setBounds(425, 150, 200, 25);
+        gender1.setBounds(425, 150, 50, 25);
+        gender2.setBounds(520, 150, 50, 25);
 
         positionLabel.setBounds(350, 210, 100, 25);
-        positionText.setBounds(425, 210, 200, 25);
+        positionBox.setBounds(425, 210, 200, 25);
 
         birthLabel.setBounds(350, 270, 100, 25);
         birthText.setBounds(425, 270, 200, 25);
 
         financialAuthorityLabel.setBounds(650,90,100,25);
-        financialAuthorityText.setBounds(725, 90, 200, 25);
-//        timeText.addFocusListener(new JTextFieldHintListener(timeText, "不输入默认当前年份"));
+//        financialAuthorityText.setBounds(725, 90, 200, 25);
+        fin1.setBounds(725, 90, 50, 25);
+        fin2.setBounds(830, 90, 50, 25);
+
         selectButton.setBounds(350, 25, 100, 25);
-        updateButton.setBounds(175, 350, 100, 25);
-        cancelButton.setBounds(450, 350, 100, 25);
+        updateButton.setBounds(650, 270, 100, 25);
+        cancelButton.setBounds(800, 270, 100, 25);
+
+        CalendarPanel p1 = new CalendarPanel(birthText, "yyyy-MM-dd");
+        CalendarPanel p2 = new CalendarPanel(timeText, "yyyy-MM-dd");
+
+        p1.initCalendarPanel();
+        p2.initCalendarPanel();
+
+        add(p1);
+        add(p2);
         add(panel, BorderLayout.CENTER);
     }
 
@@ -139,16 +172,24 @@ public class UpdateEmpGUI extends JFrame {
         panel.add(nameText);
 
         panel.add(genderLabel);
-        panel.add(genderText);
+//        panel.add(genderText);
+        genderGroup.add(gender1);
+        genderGroup.add(gender2);
+        panel.add(gender1);
+        panel.add(gender2);
 
         panel.add(positionLabel);
-        panel.add(positionText);
+        panel.add(positionBox);
 
         panel.add(departmentLabel);
-        panel.add(departmentText);
+        panel.add(departmentBox);
 
         panel.add(financialAuthorityLabel);
-        panel.add(financialAuthorityText);
+//        panel.add(financialAuthorityText);
+        finGroup.add(fin1);
+        finGroup.add(fin2);
+        panel.add(fin1);
+        panel.add(fin2);
 
         panel.add(timeLabel);
         panel.add(timeText);
@@ -186,19 +227,35 @@ public class UpdateEmpGUI extends JFrame {
     }
 
     public static String getGenderText() {
-        return genderText.getText();
+        Enumeration<AbstractButton> buttons = genderGroup.getElements();
+        while (buttons.hasMoreElements()) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
     }
 
     public static String getPositionText() {
-        return positionText.getText();
+        return positionBox.getName();
     }
 
     public static String getDepartmentText() {
-        return departmentText.getText();
+        return (String) departmentBox.getSelectedItem();
     }
 
     public static String getFinancialAuthorityText() {
-        return financialAuthorityText.getText();
+        Enumeration<AbstractButton> buttons = genderGroup.getElements();
+        while (buttons.hasMoreElements()) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                if ("是".equals(button.getText()))
+                return "1";
+                else return "0";
+            }
+        }
+        return null;
     }
 
     public static String getTimeText() {
@@ -222,27 +279,35 @@ public class UpdateEmpGUI extends JFrame {
     }
 
     public static void setGenderText(String gender) {
-        genderText.setText(gender);
+        if ("男".equals(gender)) {
+            gender1.setSelected(true);
+        } else if ("女".equals(gender)) {
+            gender2.setSelected(true);
+        }
     }
 
     public static void setPositionText(String position) {
-        positionText.setText(position);
+        positionBox.setSelectedItem(position);
     }
 
     public static void setDepartmentText(String department) {
-        departmentText.setText(department);
+        departmentBox.setSelectedItem(department);
     }
 
     public static void setFinancialAuthorityText(int financialAuthority) {
-        financialAuthorityText.setText(String.valueOf(financialAuthority));
+        if (financialAuthority == 1) {
+            fin1.setSelected(true);
+        } else if (financialAuthority == 0) {
+            fin2.setSelected(true);
+        }
     }
 
     public static void setTimeText(Date time) {
-        timeText.setText(String.valueOf(time));
+        timeText.setText(simpleDateFormat.format(time));
     }
 
     public static void setBirthText(Date birth) {
-        birthText.setText(String.valueOf(birth));
+        birthText.setText(simpleDateFormat.format(birth));
     }
 }
 
