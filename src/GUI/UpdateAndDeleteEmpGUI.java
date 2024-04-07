@@ -1,7 +1,6 @@
 package GUI;
 
-import Event.UpdateEmpEvent;
-import Event.SelectEmpByIdEvent;
+import Event.*;
 import utils.CalendarPanel;
 
 import javax.swing.*;
@@ -12,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 
-public class UpdateEmpGUI extends JFrame {
+public class UpdateAndDeleteEmpGUI extends JFrame {
     private JButton selectButton;
     private JButton cancelButton;
     private JButton updateButton;
@@ -47,7 +46,7 @@ public class UpdateEmpGUI extends JFrame {
     String[] positions = SQL.Select.getAllPositionName(); // 所有岗位
     String[] departments = SQL.Select.getAllDepartmentName(); // 所有部门
 
-    public UpdateEmpGUI() {
+    public UpdateAndDeleteEmpGUI() {
         createComponents();
         setLayout();
         addComponents();
@@ -59,7 +58,7 @@ public class UpdateEmpGUI extends JFrame {
         // 创建按钮
         selectButton = new JButton("查找");
         updateButton = new JButton("修改");
-        cancelButton = new JButton("取消");
+        cancelButton = new JButton("删除");
 
         // 增删改文本框
         usernameLabel = new JLabel(("账号:"));
@@ -190,12 +189,8 @@ public class UpdateEmpGUI extends JFrame {
         selectButton.addActionListener(new SelectEventListener());
 
         updateButton.addActionListener(new UpdateEventListener());
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+
+        cancelButton.addActionListener(new DeleteEventListener());
     }
 
     public static String getNumberText() {
@@ -254,6 +249,9 @@ public class UpdateEmpGUI extends JFrame {
         return birthText.getText();
     }
 
+    public static void setEmpIDText(String empID) {
+        numberText.setText(empID);
+    }
     public static void setUsernameText(String username) {
         usernameText.setText(username);
     }
@@ -310,5 +308,12 @@ class SelectEventListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         new SelectEmpByIdEvent().actionPerformed(e);
+    }
+}
+
+class DeleteEventListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        new DeleteEmpEvent().actionPerformed(e);
     }
 }

@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -22,10 +21,9 @@ public class ManageGUI extends JFrame {
 //    private JTextField textFieldGender;
 //    private JTextField textFieldDepartment;
     private JButton addButton;
-    private JButton deleteButton;
-    private JButton updateButton;
+    private JButton updateAndDeleteButton;
     private JButton selectButton;
-    private JButton switchButton;
+    private JButton refreshButton;
     private JPanel buttonPanel; // 用于放置按钮的面板
     private static JPanel inputPanel; // 用于放置文本的面板
     private JPanel gapPanel; // 用于创建间隔的面板
@@ -83,10 +81,9 @@ public class ManageGUI extends JFrame {
 
         // 创建按钮
         addButton = new JButton("添加");
-        deleteButton = new JButton("删除");
-        updateButton = new JButton("更新");
+        updateAndDeleteButton = new JButton("更新&删除");
         selectButton = new JButton("查询");
-        switchButton = new JButton("切换");
+        refreshButton = new JButton("刷新");
         buttonPanel = new JPanel(); // 创建一个面板用于放置按钮
 
         // 增删改文本框
@@ -154,13 +151,11 @@ public class ManageGUI extends JFrame {
         // 添加按钮到按钮面板
         buttonPanel.add(addButton);
         buttonPanel.add(Box.createVerticalStrut(30)); // 添加按钮间隔
-        buttonPanel.add(deleteButton);
-        buttonPanel.add(Box.createVerticalStrut(30)); // 添加按钮间隔
-        buttonPanel.add(updateButton);
+        buttonPanel.add(updateAndDeleteButton);
         buttonPanel.add(Box.createVerticalStrut(30)); // 添加按钮间隔
         buttonPanel.add(selectButton);
         buttonPanel.add(Box.createVerticalStrut(30)); // 添加按钮间隔
-        buttonPanel.add(switchButton);
+        buttonPanel.add(refreshButton);
     }
 
     private void addInput() {
@@ -209,60 +204,55 @@ public class ManageGUI extends JFrame {
 
     private void addEvents() {
         // 为按钮添加事件监听器
-        updateButton.addActionListener(new ActionListener() {
+        updateAndDeleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                UpdateEmpGUI updateEmpGUI = new UpdateEmpGUI();
-                updateEmpGUI.setTitle("员工更新界面");
-                updateEmpGUI.setSize(1000, 700); // 调整窗口大小以适应组件
-                updateEmpGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                updateEmpGUI.setLocationRelativeTo(null);
+                UpdateAndDeleteEmpGUI updateAndDeleteEmpGUI = new UpdateAndDeleteEmpGUI();
+                updateAndDeleteEmpGUI.setTitle("员工更新界面");
+                updateAndDeleteEmpGUI.setSize(1000, 700); // 调整窗口大小以适应组件
+                updateAndDeleteEmpGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                updateAndDeleteEmpGUI.setLocationRelativeTo(null);
 
-                updateEmpGUI.setVisible(true);
+                updateAndDeleteEmpGUI.setVisible(true);
             }
         });
-//        switchButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (flag) {
-//                    remove(scrollPane);
-//                    add(inputPanel, BorderLayout.CENTER);
-//                    revalidate();
-//                    repaint();
-//                    flag = false;
-//                } else {
-//                    remove(inputPanel);
-//                    add(scrollPane);
-//                    revalidate();
-//                    repaint();
-//                    flag = true;
-//                }
-//            }
-//        });
-        // 更新监听
-//        UpdateEventListener updateEventListener  = new UpdateEventListener();
-//        updateButton.addActionListener(updateEventListener);
+
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Emp> updatedAllEmp = getAllEmp();
+                // 清空表格模型中的所有行
+                while (tableModel.getRowCount() > 0) {
+                    tableModel.removeRow(0);
+                }
+                // 使用更新后的列表重新填充表格模型
+                for (Emp emp : updatedAllEmp) {
+                    Object[] rowData = new Object[] {
+                            emp.getEmpID(),
+                            emp.getUsername(),
+                            emp.getPassword(),
+                            emp.getName(),
+                            emp.getGender(),
+                            emp.getAge(),
+                            emp.getPosition(),
+                            emp.getDepartment(),
+                            simpleDateFormat.format(emp.getHireYear()),
+                            emp.getFinancialAuthority()
+                    };
+                    tableModel.addRow(rowData);
+                }
+                // 重绘表格
+                table.repaint();
+            }
+        });
     }
+
 
     public List<Emp> getAllEmp() {
         List<Emp> emps = Select.selectAllEmp();
-//        int i = 0;
-//        // 获取Emp类的成员数量
-//        Class<?> clazz = null;
-//        try {
-//            clazz = Class.forName("atom.Emp");
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//        Field[] fields = clazz.getDeclaredFields();
-//
-//        // 实时设置表格大小
+
         colCount = 10;
         columnNames = new String[]{"工号","账号","密码", "姓名", "性别","年龄","岗位","部门", "入职时间","财务权限"};
-//
-//        for (Field field : fields) {
-//            columnNames[i++] = field.getName();
-//        }
 
         return emps;
     }

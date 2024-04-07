@@ -1,7 +1,6 @@
 package Event;
 
-import GUI.ManageGUI;
-import GUI.UpdateEmpGUI;
+import GUI.UpdateAndDeleteEmpGUI;
 import SQL.Update;
 
 import javax.swing.*;
@@ -11,25 +10,25 @@ import java.awt.event.ActionListener;
 public class UpdateEmpEvent implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        String number = UpdateEmpGUI.getNumberText();
-        String username = UpdateEmpGUI.getUserNameText();
-        String password = UpdateEmpGUI.getPasswordText();
-        String name = UpdateEmpGUI.getNameText();
-        String gender = UpdateEmpGUI.getGenderText();
+        String empID = UpdateAndDeleteEmpGUI.getNumberText();
+        String username = UpdateAndDeleteEmpGUI.getUserNameText();
+        String password = UpdateAndDeleteEmpGUI.getPasswordText();
+        String name = UpdateAndDeleteEmpGUI.getNameText();
+        String gender = UpdateAndDeleteEmpGUI.getGenderText();
 
-        String position = UpdateEmpGUI.getPositionText();
-        String department = UpdateEmpGUI.getDepartmentText();
+        String position = UpdateAndDeleteEmpGUI.getPositionText();
+        String department = UpdateAndDeleteEmpGUI.getDepartmentText();
 
-        String financialAuthority = UpdateEmpGUI.getFinancialAuthorityText();
-        String time = UpdateEmpGUI.getTimeText();
-        String birth = UpdateEmpGUI.getBirthText();
+        String financialAuthority = UpdateAndDeleteEmpGUI.getFinancialAuthorityText();
+        String time = UpdateAndDeleteEmpGUI.getTimeText();
+        String birth = UpdateAndDeleteEmpGUI.getBirthText();
 
-        if(number.equals("")){
+        if(empID.equals("")){
             numberEmpty();
         }else if (username.equals("") || password.equals("") || name.equals("") || gender.equals("") || department.equals("") || position.equals("") || time.equals("") || birth.equals("") || financialAuthority.equals("")){
             informationEmpty();
         }else {
-            Update.updateEmp(number,username,password,name,gender,position,department,financialAuthority,time,birth);
+            Update.updateEmp(empID,username,password,name,gender,position,department,financialAuthority,time,birth);
         }
     }
 
