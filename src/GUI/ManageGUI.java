@@ -157,6 +157,18 @@ public class ManageGUI extends JFrame {
     }
     private void addEvents() {
         // 为按钮添加事件监听器
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddEmpGUI AddEmpGUI = new AddEmpGUI();
+                AddEmpGUI.setTitle("新增员工界面");
+                AddEmpGUI.setSize(1000, 700); // 调整窗口大小以适应组件
+                AddEmpGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                AddEmpGUI.setLocationRelativeTo(null);
+
+                AddEmpGUI.setVisible(true);
+            }
+        });
         updateAndDeleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

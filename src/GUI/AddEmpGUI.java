@@ -1,7 +1,7 @@
 package GUI;
 
-import Event.*;
 import utils.CalendarPanel;
+import Event.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,10 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 
-public class UpdateAndDeleteEmpGUI extends JFrame {
-    private JButton selectButton;
-    private JButton deleteButton;
-    private JButton updateButton;
+public class AddEmpGUI extends JFrame {
+    private JButton cancelButton;
+    private JButton addButton;
     private static JPanel panel; // 用于放置的面板
     private JLabel usernameLabel; // 账号标签
     private JLabel passwordLabel; // 密码标签
@@ -34,19 +33,19 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
     private static JTextField nameText; // 姓名框
     private static JTextField timeText; // 入职年份
     private static JTextField birthText; // 生日
-    static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd"); // 时期格式
+    static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 时期格式
     private static JRadioButton gender1 = new JRadioButton("男");
     private static JRadioButton gender2 = new JRadioButton("女");
     private static JRadioButton fin1 = new JRadioButton("是");
     private static JRadioButton fin2 = new JRadioButton("否");
-    private static ButtonGroup genderGroup =new ButtonGroup(); // 性别选项组
-    private ButtonGroup finGroup =new ButtonGroup(); // 权限组
+    private static ButtonGroup genderGroup = new ButtonGroup(); // 性别选项组
+    private static ButtonGroup finGroup = new ButtonGroup(); // 权限组
     private static JComboBox<String> positionBox; // 岗位多选框
     private static JComboBox<String> departmentBox; // 部门多选框
     String[] positions = SQL.Select.getAllPositionName(); // 所有岗位
     String[] departments = SQL.Select.getAllDepartmentName(); // 所有部门
 
-    public UpdateAndDeleteEmpGUI() {
+    public AddEmpGUI() {
         createComponents();
         setLayout();
         addComponents();
@@ -56,9 +55,8 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
 
     private void createComponents() {
         // 创建按钮
-        selectButton = new JButton("查找");
-        updateButton = new JButton("修改");
-        deleteButton = new JButton("删除");
+        addButton = new JButton("添加");
+        cancelButton = new JButton("取消");
 
         // 增删改文本框
         usernameLabel = new JLabel(("账号:"));
@@ -92,7 +90,6 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
         panel.setLayout(null);
         numberLabel.setBounds(50, 25, 100, 25);
         numberText.setBounds(125, 25, 200, 25);
-        numberText.addFocusListener(new JTextFieldHintListener(numberText, "工号不可修改，仅做查询"));
 
         usernameLabel.setBounds(50, 90, 100, 25);
         usernameText.setBounds(125, 90, 200, 25);
@@ -120,14 +117,14 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
         birthLabel.setBounds(350, 270, 100, 25);
         birthText.setBounds(425, 270, 200, 25);
 
-        financialAuthorityLabel.setBounds(650,90,100,25);
+        financialAuthorityLabel.setBounds(350, 25, 100, 25);
 //        financialAuthorityText.setBounds(725, 90, 200, 25);
-        fin1.setBounds(725, 90, 50, 25);
-        fin2.setBounds(820, 90, 50, 25);
+        fin1.setBounds(425, 25, 50, 25);
+        fin2.setBounds(520, 25, 50, 25);
 
-        selectButton.setBounds(350, 25, 100, 25);
-        updateButton.setBounds(650, 270, 100, 25);
-        deleteButton.setBounds(800, 270, 100, 25);
+//        selectButton.setBounds(350, 25, 100, 25);
+        addButton.setBounds(160, 350, 100, 25);
+        cancelButton.setBounds(475, 350, 100, 25);
 
         CalendarPanel p1 = new CalendarPanel(birthText, "yyyy-MM-dd");
         CalendarPanel p2 = new CalendarPanel(timeText, "yyyy-MM-dd");
@@ -142,9 +139,8 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
 
     private void addComponents() {
         // 添加按钮到按钮面板
-        panel.add(selectButton);
-        panel.add(deleteButton);
-        panel.add(updateButton);
+        panel.add(cancelButton);
+        panel.add(addButton);
     }
 
     private void addInput() {
@@ -186,11 +182,14 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
     }
 
     private void addEvents() {
-        selectButton.addActionListener(new SelectEmpByIDEventListener());
+        addButton.addActionListener(new AddEmpEventListener());
 
-        updateButton.addActionListener(new UpdateEventListener());
-
-        deleteButton.addActionListener(new DeleteEventListener());
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     public static String getNumberText() {
@@ -221,7 +220,7 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
     }
 
     public static String getPositionText() {
-        return positionBox.getName();
+        return (String) positionBox.getSelectedItem();
     }
 
     public static String getDepartmentText() {
@@ -229,12 +228,12 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
     }
 
     public static String getFinancialAuthorityText() {
-        Enumeration<AbstractButton> buttons = genderGroup.getElements();
+        Enumeration<AbstractButton> buttons = finGroup.getElements();
         while (buttons.hasMoreElements()) {
             AbstractButton button = buttons.nextElement();
             if (button.isSelected()) {
                 if ("是".equals(button.getText()))
-                return "1";
+                    return "1";
                 else return "0";
             }
         }
@@ -249,71 +248,12 @@ public class UpdateAndDeleteEmpGUI extends JFrame {
         return birthText.getText();
     }
 
-    public static void setEmpIDText(String empID) {
-        numberText.setText(empID);
-    }
-    public static void setUsernameText(String username) {
-        usernameText.setText(username);
-    }
-
-    public static void setPasswordText(String password) {
-        passwordText.setText(password);
-    }
-
-    public static void setNameText(String name) {
-        nameText.setText(name);
-    }
-
-    public static void setGenderText(String gender) {
-        if ("男".equals(gender)) {
-            gender1.setSelected(true);
-        } else if ("女".equals(gender)) {
-            gender2.setSelected(true);
-        }
-    }
-
-    public static void setPositionText(String position) {
-        positionBox.setSelectedItem(position);
-    }
-
-    public static void setDepartmentText(String department) {
-        departmentBox.setSelectedItem(department);
-    }
-
-    public static void setFinancialAuthorityText(int financialAuthority) {
-        if (financialAuthority == 1) {
-            fin1.setSelected(true);
-        } else if (financialAuthority == 0) {
-            fin2.setSelected(true);
-        }
-    }
-
-    public static void setTimeText(Date time) {
-        timeText.setText(simpleDateFormat.format(time));
-    }
-
-    public static void setBirthText(Date birth) {
-        birthText.setText(simpleDateFormat.format(birth));
-    }
 }
 
-class UpdateEventListener implements ActionListener {
+class AddEmpEventListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        new UpdateEmpEvent().actionPerformed(e);
+        new AddEmpEvent().actionPerformed(e);
     }
 }
 
-class SelectEmpByIDEventListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new SelectEmpByIdEvent().actionPerformed(e);
-    }
-}
-
-class DeleteEventListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new DeleteEmpEvent().actionPerformed(e);
-    }
-}
