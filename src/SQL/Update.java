@@ -2,7 +2,6 @@ package SQL;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import utils.JDBCUtils;
-import javax.swing.*;
 
 public class Update {
     static JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());

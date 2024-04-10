@@ -1,6 +1,6 @@
 package com.yulag;
 
-import Event.LoginEvent;
+import event.LoginEvent;
 
 /*
  *类名:Leader.class
@@ -19,6 +19,6 @@ public class Leader {
 	public static void main(String[] args) {
 //		Login login =new Login();//加载登录类
 //		setDisappear(login);
-		new LoginEvent.LoginSuccessHandler().handleSuccess();
+		new LoginEvent.LoginSuccessHandler().AccountingSuccess();
 	}
 }

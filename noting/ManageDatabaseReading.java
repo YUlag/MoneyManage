@@ -1,4 +1,4 @@
-package Event;
+package event;
 /*
  *类名:ManageDatabaseReading.class
  *版本:1.0

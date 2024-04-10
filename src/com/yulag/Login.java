@@ -1,6 +1,6 @@
 package com.yulag;
 
-import Event.LoginEvent;
+import event.LoginEvent;
 
 import javax.swing.*;
 import java.awt.*;

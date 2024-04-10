@@ -1,8 +1,8 @@
-package Event;
+package event;
 
-import GUI.UpdateAndDeleteEmpGUI;
 import SQL.Select;
-import atom.*;
+import atom.Emp;
+import managerGUI.UpdateAndDeleteEmpGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,10 +14,10 @@ public class SelectEmpByIdEvent implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String number = UpdateAndDeleteEmpGUI.getNumberText();
 
-        if(number.equals("")){
+        if (number.equals("")) {
             numberEmpty();
-        }else {
-            try{
+        } else {
+            try {
                 Emp emp = Select.selectEmpById(Integer.parseInt(number));
 
                 UpdateAndDeleteEmpGUI.setUsernameText(emp.getUsername());
@@ -29,22 +29,25 @@ public class SelectEmpByIdEvent implements ActionListener {
                 UpdateAndDeleteEmpGUI.setFinancialAuthorityText(emp.getFinancialAuthority());
                 UpdateAndDeleteEmpGUI.setTimeText(emp.getHireYear());
                 UpdateAndDeleteEmpGUI.setBirthText(emp.getBirthdate());
-            }catch (NumberFormatException t1){
+            } catch (NumberFormatException t1) {
                 numberFormatError();
                 UpdateAndDeleteEmpGUI.setEmpIDText("");
-            }catch (IndexOutOfBoundsException t2){
+            } catch (IndexOutOfBoundsException t2) {
                 numberOutError();
                 UpdateAndDeleteEmpGUI.setEmpIDText("");
             }
         }
 
     }
+
     private void numberEmpty() {
         JOptionPane.showMessageDialog(null, "根据工号更新,不能为空", "输入错误", JOptionPane.WARNING_MESSAGE);
     }
+
     private void numberOutError() {
         JOptionPane.showMessageDialog(null, "未找到指定工号,请重新输入", "输入错误", JOptionPane.WARNING_MESSAGE);
     }
+
     private void numberFormatError() {
         JOptionPane.showMessageDialog(null, "输入格式有误，请重新输入", "输入错误", JOptionPane.WARNING_MESSAGE);
     }

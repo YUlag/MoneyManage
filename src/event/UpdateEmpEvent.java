@@ -1,7 +1,7 @@
-package Event;
+package event;
 
-import GUI.UpdateAndDeleteEmpGUI;
 import SQL.Update;
+import managerGUI.UpdateAndDeleteEmpGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,12 +23,12 @@ public class UpdateEmpEvent implements ActionListener {
         String time = UpdateAndDeleteEmpGUI.getTimeText();
         String birth = UpdateAndDeleteEmpGUI.getBirthText();
 
-        if(empID.equals("")){
+        if (empID.equals("")) {
             numberEmpty();
-        }else if (username.equals("") || password.equals("") || name.equals("") || gender.equals("") || department.equals("") || position.equals("") || time.equals("") || birth.equals("") || financialAuthority.equals("")){
+        } else if (username.equals("") || password.equals("") || name.equals("") || gender.equals("") || department.equals("") || position.equals("") || time.equals("") || birth.equals("") || financialAuthority.equals("")) {
             informationEmpty();
-        }else {
-            Update.updateEmp(empID,username,password,name,gender,position,department,financialAuthority,time,birth);
+        } else {
+            Update.updateEmp(empID, username, password, name, gender, position, department, financialAuthority, time, birth);
         }
     }
 
@@ -36,7 +36,7 @@ public class UpdateEmpEvent implements ActionListener {
         JOptionPane.showMessageDialog(null, "根据工号更新,不能为空", "输入错误", JOptionPane.WARNING_MESSAGE);
     }
 
-    private void informationEmpty(){
+    private void informationEmpty() {
         JOptionPane.showMessageDialog(null, "信息不能为空", "输入错误", JOptionPane.WARNING_MESSAGE);
     }
 }

@@ -1,8 +1,7 @@
-package GUI;
+package managerGUI;
 
 import SQL.Select;
 import atom.Emp;
-import Event.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,26 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageGUI extends JFrame {
+public class ManagerGUI extends JFrame {
     private static final int colCount = 10; // 表格列数
     private static final String[] columnNames = new String[]{"工号", "账号", "密码", "姓名", "性别", "年龄", "岗位", "部门", "入职时间", "财务权限"}; // 表格头部
-
-    private DefaultTableModel tableModel;
-    private JTable table;
-    private JButton addButton;
-    private JButton updateAndDeleteButton;
-    private JButton selectButton;
-    private JButton refreshButton;
-    private JPanel buttonPanel; // 用于放置按钮的面板
     private static JPanel inputPanel; // 用于放置文本的面板
-    private JPanel gapPanel; // 用于创建间隔的面板
     private static JScrollPane scrollPane;
-    private JLabel numberLabel; // 工号标签
-    private JLabel nameLabel; // 姓名标签
-    private JLabel genderLabel; // 性别标签
-    private JLabel deptLabel; // 部门标签
-    private JLabel positionLabel; // 岗位标签
-
     private static JTextField numberText; // 工号框
     private static JTextField nameText; // 姓名框
     private static JComboBox<String> genderBox; // 性别多选框
@@ -40,17 +24,49 @@ public class ManageGUI extends JFrame {
     private static JComboBox<String> departmentBox; // 部门多选框
     private static String[] positions; // 所有岗位
     private static String[] departments; // 所有部门
-    private static String[] genders = {"","男","女"};
-
+    private static final String[] genders = {"", "男", "女"};
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private DefaultTableModel tableModel;
+    private JTable table;
+    private JButton addButton;
+    private JButton updateAndDeleteButton;
+    private JButton selectButton;
+    private JButton refreshButton;
+    private JPanel buttonPanel; // 用于放置按钮的面板
+    private JPanel gapPanel; // 用于创建间隔的面板
+    private JLabel numberLabel; // 工号标签
+    private JLabel nameLabel; // 姓名标签
+    private JLabel genderLabel; // 性别标签
+    private JLabel deptLabel; // 部门标签
+    private JLabel positionLabel; // 岗位标签
 
-    public ManageGUI() {
+    public ManagerGUI() {
         createComponents();
         setLayout();
 
         addComponents();
         addInput();
         addEvents();
+    }
+
+    public static String getNumberText() {
+        return numberText.getText();
+    }
+
+    public static String getNameText() {
+        return nameText.getText();
+    }
+
+    public static String getGenderText() {
+        return (String) genderBox.getSelectedItem();
+    }
+
+    public static String getDeptText() {
+        return (String) departmentBox.getSelectedItem();
+    }
+
+    public static String getPositionText() {
+        return (String) positionBox.getSelectedItem();
     }
 
     private void createComponents() {
@@ -78,11 +94,11 @@ public class ManageGUI extends JFrame {
         genderBox = new JComboBox<>(genders);
 
         ArrayList<String> list1 = new ArrayList<>(List.of(Select.getAllPositionName()));
-        list1.add(0,"");
+        list1.add(0, "");
         positions = list1.toArray(new String[0]);
 
         ArrayList<String> list2 = new ArrayList<>(List.of(Select.getAllDepartmentName()));
-        list2.add(0,"");
+        list2.add(0, "");
         departments = list2.toArray(new String[0]);
 
         departmentBox = new JComboBox<>(departments);
@@ -155,6 +171,7 @@ public class ManageGUI extends JFrame {
         inputPanel.add(positionLabel);
         inputPanel.add(positionBox);
     }
+
     private void addEvents() {
         // 为按钮添加事件监听器
         addButton.addActionListener(new ActionListener() {
@@ -193,11 +210,11 @@ public class ManageGUI extends JFrame {
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String number = ManageGUI.getNumberText();
-                String name = ManageGUI.getNameText();
-                String gender = ManageGUI.getGenderText();
-                String department = ManageGUI.getDeptText();
-                String position = ManageGUI.getPositionText();
+                String number = ManagerGUI.getNumberText();
+                String name = ManagerGUI.getNameText();
+                String gender = ManagerGUI.getGenderText();
+                String department = ManagerGUI.getDeptText();
+                String position = ManagerGUI.getPositionText();
 
                 List<Emp> emps = Select.selectEmp(number, name, gender, department, position);
 
@@ -205,7 +222,6 @@ public class ManageGUI extends JFrame {
             }
         });
     }
-
 
     public void getEmpInEmps(List<Emp> emps) {
         clearTable();
@@ -229,22 +245,10 @@ public class ManageGUI extends JFrame {
         table.repaint();
     }
 
-    public void clearTable(){
+    public void clearTable() {
         // 清空表格模型中的所有行
         while (tableModel.getRowCount() > 0) {
             tableModel.removeRow(0);
         }
     }
-
-    public static String getNumberText() {
-        return numberText.getText();
-    }
-    public static String getNameText() {
-        return nameText.getText();
-    }
-    public static String getGenderText() { return (String) genderBox.getSelectedItem(); }
-    public static String getDeptText() {
-        return (String) departmentBox.getSelectedItem();
-    }
-    public static String getPositionText() {return (String) positionBox.getSelectedItem();}
 }

@@ -47,6 +47,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return employeeID
      */
     public int getEmpID() {
@@ -55,6 +56,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param empID
      */
     public void setEmpID(int empID) {
@@ -63,6 +65,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return username
      */
     public String getUsername() {
@@ -71,6 +74,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param username
      */
     public void setUsername(String username) {
@@ -79,6 +83,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return password
      */
     public String getPassword() {
@@ -87,6 +92,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param password
      */
     public void setPassword(String password) {
@@ -95,6 +101,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return name
      */
     public String getName() {
@@ -103,6 +110,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param name
      */
     public void setName(String name) {
@@ -111,6 +119,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return gender
      */
     public String getGender() {
@@ -119,6 +128,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param gender
      */
     public void setGender(String gender) {
@@ -127,6 +137,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return position
      */
     public String getPosition() {
@@ -135,6 +146,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param position
      */
     public void setPosition(String position) {
@@ -143,6 +155,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return department
      */
     public String getDepartment() {
@@ -151,6 +164,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param department
      */
     public void setDepartment(String department) {
@@ -159,6 +173,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return hireYear
      */
     public Date getHireYear() {
@@ -167,6 +182,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param hireYear
      */
     public void setHireYear(Date hireYear) {
@@ -175,6 +191,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return financialAuthority
      */
     public int getFinancialAuthority() {
@@ -183,6 +200,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param financialAuthority
      */
     public void setFinancialAuthority(int financialAuthority) {
@@ -191,6 +209,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return Birthdate
      */
     public Date getBirthdate() {
@@ -199,6 +218,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param Birthdate
      */
     public void setBirthdate(Date Birthdate) {
@@ -207,6 +227,7 @@ public class Emp {
 
     /**
      * 获取
+     *
      * @return age
      */
     public int getAge() {
@@ -215,6 +236,7 @@ public class Emp {
 
     /**
      * 设置
+     *
      * @param age
      */
     public void setAge(int age) {

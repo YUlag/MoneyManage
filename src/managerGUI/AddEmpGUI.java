@@ -1,20 +1,34 @@
-package GUI;
+package managerGUI;
 
+import eventListener.AddEmpEventListener;
 import utils.CalendarPanel;
-import Event.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Enumeration;
 
 public class AddEmpGUI extends JFrame {
+    private static JPanel panel; // 用于放置的面板
+    private static JTextField usernameText; // 账号框
+    private static JTextField passwordText; // 密码框
+    private static JTextField numberText; // 工号框
+    private static JTextField nameText; // 姓名框
+    private static JTextField timeText; // 入职年份
+    private static JTextField birthText; // 生日
+    private static final JRadioButton gender1 = new JRadioButton("男");
+    private static final JRadioButton gender2 = new JRadioButton("女");
+    private static final JRadioButton fin1 = new JRadioButton("是");
+    private static final JRadioButton fin2 = new JRadioButton("否");
+    private static final ButtonGroup genderGroup = new ButtonGroup(); // 性别选项组
+    private static final ButtonGroup finGroup = new ButtonGroup(); // 权限组
+    private static JComboBox<String> positionBox; // 岗位多选框
+    private static JComboBox<String> departmentBox; // 部门多选框
+    String[] positions = SQL.Select.getAllPositionName(); // 所有岗位
+    String[] departments = SQL.Select.getAllDepartmentName(); // 所有部门
     private JButton cancelButton;
     private JButton addButton;
-    private static JPanel panel; // 用于放置的面板
     private JLabel usernameLabel; // 账号标签
     private JLabel passwordLabel; // 密码标签
     private JLabel numberLabel; // 工号标签
@@ -26,31 +40,68 @@ public class AddEmpGUI extends JFrame {
     private JLabel financialAuthorityLabel; // 权限标签
     private JLabel birthLabel; // 生日标签
 
-    private static JTextField usernameText; // 账号框
-    private static JTextField passwordText; // 密码框
-
-    private static JTextField numberText; // 工号框
-    private static JTextField nameText; // 姓名框
-    private static JTextField timeText; // 入职年份
-    private static JTextField birthText; // 生日
-    static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 时期格式
-    private static JRadioButton gender1 = new JRadioButton("男");
-    private static JRadioButton gender2 = new JRadioButton("女");
-    private static JRadioButton fin1 = new JRadioButton("是");
-    private static JRadioButton fin2 = new JRadioButton("否");
-    private static ButtonGroup genderGroup = new ButtonGroup(); // 性别选项组
-    private static ButtonGroup finGroup = new ButtonGroup(); // 权限组
-    private static JComboBox<String> positionBox; // 岗位多选框
-    private static JComboBox<String> departmentBox; // 部门多选框
-    String[] positions = SQL.Select.getAllPositionName(); // 所有岗位
-    String[] departments = SQL.Select.getAllDepartmentName(); // 所有部门
-
     public AddEmpGUI() {
         createComponents();
         setLayout();
         addComponents();
         addInput();
         addEvents();
+    }
+
+    public static String getNumberText() {
+        return numberText.getText();
+    }
+
+    public static String getUserNameText() {
+        return usernameText.getText();
+    }
+
+    public static String getPasswordText() {
+        return passwordText.getText();
+    }
+
+    public static String getNameText() {
+        return nameText.getText();
+    }
+
+    public static String getGenderText() {
+        Enumeration<AbstractButton> buttons = genderGroup.getElements();
+        while (buttons.hasMoreElements()) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
+    }
+
+    public static String getPositionText() {
+        return (String) positionBox.getSelectedItem();
+    }
+
+    public static String getDepartmentText() {
+        return (String) departmentBox.getSelectedItem();
+    }
+
+    public static String getFinancialAuthorityText() {
+        Enumeration<AbstractButton> buttons = finGroup.getElements();
+        while (buttons.hasMoreElements()) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                if ("是".equals(button.getText()))
+                    return "1";
+                else return "0";
+            }
+        }
+        return null;
+    }
+
+    public static String getTimeText() {
+        return timeText.getText();
+    }
+
+    public static String getBirthText() {
+        return birthText.getText();
     }
 
     private void createComponents() {
@@ -192,68 +243,5 @@ public class AddEmpGUI extends JFrame {
         });
     }
 
-    public static String getNumberText() {
-        return numberText.getText();
-    }
-
-    public static String getUserNameText() {
-        return usernameText.getText();
-    }
-
-    public static String getPasswordText() {
-        return passwordText.getText();
-    }
-
-    public static String getNameText() {
-        return nameText.getText();
-    }
-
-    public static String getGenderText() {
-        Enumeration<AbstractButton> buttons = genderGroup.getElements();
-        while (buttons.hasMoreElements()) {
-            AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) {
-                return button.getText();
-            }
-        }
-        return null;
-    }
-
-    public static String getPositionText() {
-        return (String) positionBox.getSelectedItem();
-    }
-
-    public static String getDepartmentText() {
-        return (String) departmentBox.getSelectedItem();
-    }
-
-    public static String getFinancialAuthorityText() {
-        Enumeration<AbstractButton> buttons = finGroup.getElements();
-        while (buttons.hasMoreElements()) {
-            AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) {
-                if ("是".equals(button.getText()))
-                    return "1";
-                else return "0";
-            }
-        }
-        return null;
-    }
-
-    public static String getTimeText() {
-        return timeText.getText();
-    }
-
-    public static String getBirthText() {
-        return birthText.getText();
-    }
-
-}
-
-class AddEmpEventListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new AddEmpEvent().actionPerformed(e);
-    }
 }
 

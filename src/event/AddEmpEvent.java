@@ -1,9 +1,7 @@
-package Event;
+package event;
 
-import GUI.AddEmpGUI;
-import GUI.UpdateAndDeleteEmpGUI;
 import SQL.Insert;
-import SQL.Update;
+import managerGUI.AddEmpGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,10 +24,11 @@ public class AddEmpEvent implements ActionListener {
         if (empID.equals("") || username.equals("") || password.equals("") || name.equals("") || gender.equals("") || department.equals("") || position.equals("") || time.equals("") || birth.equals("") || financialAuthority.equals("")) {
             informationEmpty();
         } else {
-            Insert.addEmp(empID,username,password,name,gender,position,department,financialAuthority,time,birth);
+            Insert.addEmp(empID, username, password, name, gender, position, department, financialAuthority, time, birth);
         }
     }
-    private void informationEmpty(){
+
+    private void informationEmpty() {
         JOptionPane.showMessageDialog(null, "信息不能为空", "输入错误", JOptionPane.WARNING_MESSAGE);
     }
 
